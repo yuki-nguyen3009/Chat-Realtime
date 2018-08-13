@@ -120,14 +120,16 @@
                 {{ csrf_field() }}
 
                 <div class="social-login">
-                    <a href="#">
+                    <a href="redirect/facebook">
                         <i class="fa fa-facebook fa-lg"></i>
                         Sign in with facebook
                     </a>
-                    <a href="#">
+
+                    <a href="{{ url('redirect/google') }}">q
                         <i class="fa fa-google-plus fa-lg"></i>
                         Sign in with Google
                     </a>
+
                 </div>
 
                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

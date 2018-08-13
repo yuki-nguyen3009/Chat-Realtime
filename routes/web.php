@@ -21,3 +21,8 @@ Route::get('/home', 'HomeController@index');
 Route::get('user/register',['uses'=>'UserController@register','as'=>'user.register']);
 Route::resource('conversation','ConversationController');
 Route::resource('message','MessageController');
+
+//Login with social account
+Route::get('/redirect/{social}', 'SocialAuthController@redirect');
+Route::get('/callback/{social}', 'SocialAuthController@callback');
+

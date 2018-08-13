@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+
+@section('additional_css')
+    <style>
+        .panel-body{
+            height: 50vh;
+            overflow-y: scroll;
+        }
+    </style>
+@endsection
+
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -16,7 +27,8 @@
                         <div class="col-md-6">
                         {{Form::open(['url'=>route('conversation.store')])}}
                         {{Form::hidden('user_id',$user->id)}}
-                        {{Form::submit('add',['class'=>'form-control'])}}
+                        {{Form::submit('Add friend',['class'=>'btn btn-primary'])}}
+                            <hr>
                         {{Form::close()}}
                         </div>
                         </div>
@@ -26,18 +38,34 @@
         </div>
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">Conversations</div>
+                <div class="panel-heading">Friends</div>
 
                 <div class="panel-body">
                     @foreach($conversations as $conversation)
                         <a href="{{route('conversation.show',$conversation->id)}}">
-                        {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
+                            {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
                         </a>
                         <hr/>
                     @endforeach
                 </div>
             </div>
         </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">Friends</div>
+
+                <div class="panel-body">
+                    @foreach($conversations as $conversation)
+                        <a href="{{route('conversation.show',$conversation->id)}}">
+                            {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
+                        </a>
+                        <hr/>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

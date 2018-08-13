@@ -118,14 +118,16 @@
 
 
                 <div class="social-login">
-                    <a href="#">
+                    <a href="redirect/facebook">
                         <i class="fa fa-facebook fa-lg"></i>
                         Sign in with facebook
                     </a>
-                    <a href="#">
+
+                    <a href="<?php echo e(url('redirect/google')); ?>">q
                         <i class="fa fa-google-plus fa-lg"></i>
                         Sign in with Google
                     </a>
+
                 </div>
 
                 <div class="form-group<?php echo e($errors->has('name') ? ' has-error' : ''); ?>">

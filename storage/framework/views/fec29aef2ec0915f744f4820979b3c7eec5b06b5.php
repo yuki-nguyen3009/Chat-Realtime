@@ -113,20 +113,23 @@
             <div class="lb-header">
                 <a href="#" class="active" id="login-box-link">Login</a>
             </div>
-            <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/login')); ?>">
-                <?php echo e(csrf_field()); ?>
 
 
                 <div class="social-login">
-                    <a href="#">
+                    <a href="redirect/facebook">
                         <i class="fa fa-facebook fa-lg"></i>
                         Login in with facebook
                     </a>
-                    <a href="#">
+
+                    <a href="<?php echo e(url('redirect/google')); ?>">
                         <i class="fa fa-google-plus fa-lg"></i>
                         log in with Google
                     </a>
+
                 </div>
+            <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/login')); ?>">
+                <?php echo e(csrf_field()); ?>
+
 
                 <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
                     <label for="email" class="col-md-4 control-label">E-Mail Address</label>

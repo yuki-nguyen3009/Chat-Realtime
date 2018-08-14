@@ -29,4 +29,12 @@ class HomeController extends Controller
         $conversations = Auth::user()->conversations();
         return view('home',compact('users','conversations'));
     }
+
+    public function conversation()
+    {
+        $users = User::where('id','!=',Auth::user()->id)->get();
+        $conversations = Auth::user()->conversations();
+        return view('conversation',compact('users','conversations'));
+        
+    }
 }

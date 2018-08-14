@@ -3,6 +3,12 @@
 
 @section('additional_css')
     <style>
+
+        body{
+            background-color: #1cbb9b;
+        }
+
+        
         .panel-body{
             height: 50vh;
             overflow-y: scroll;
@@ -49,22 +55,7 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">Friends</div>
-
-                <div class="panel-body">
-                    @foreach($conversations as $conversation)
-                        <a href="{{route('conversation.show',$conversation->id)}}">
-                            {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
-                        </a>
-                        <hr/>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+        </div>  
 
     </div>
 </div>

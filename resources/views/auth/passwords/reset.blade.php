@@ -1,5 +1,17 @@
 @extends('layouts.app')
 
+@section ('additional_css')
+
+    <style>
+
+        body{
+            background-color: #1cbb9b;
+        }
+       
+    </style>
+
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

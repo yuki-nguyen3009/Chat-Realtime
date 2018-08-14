@@ -688,6 +688,12 @@
         #frame .content .message-input .wrap button:focus {
             outline: none;
         }
+        .time_date {
+            color: #747474;
+            display: block;
+            font-size: 12px;
+            margin: 8px 0 0;
+        }
     </style>
 @endsection
 @section('content')
@@ -721,12 +727,15 @@
                 <input type="text" placeholder="Search contacts..." />
             </div>
             <div id="contacts">
-                <ul>
-                </ul>
+                @foreach($users as $user)
+                    <ul>
+                        {{$user->name}}
+                    </ul>
+                @endforeach
             </div>
             <div id="bottom-bar">
-                <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
-                <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+                <button id="addcontact" onclick="location.href='{{ url('home') }}'"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+                <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Group</span></button>
             </div>
         </div>
         <div class="content">
@@ -740,12 +749,13 @@
                     <i class="fa fa-instagram" aria-hidden="true"></i>
                 </div>
             </div>
+             
             <div class="panel-body" id="panel-body">
                 @foreach($conversation->messages as $message)
                     <div class="row">
                         <div class="message {{ ($message->user_id!=Auth::user()->id)?'not_owner':'owner'}}">
-                            {{$message->text}}<br/>
-                            <b> {{$message->created_at->diffForHumans()}}</b>
+                            <p>{{$message->text}}</p>
+                            <span class="time_date">{{now()->toDayDateTimeString()}}</span>
                         </div>
                     </div>
                 @endforeach
@@ -783,7 +793,7 @@
                 '<div class="row">'+
                 '<div class="message not_owner">'+
                 data.msg+'<br/>'+
-                '<b>just now</b>'+
+                '<span class="time_date">just now</span>'+
                 '</div>'+
                 '</div>');
 
@@ -797,6 +807,7 @@
 
             $(document).keypress(function(e) {
                 if(e.which == 13) {
+                    socket.emit('message', $('#msg').val());
                     var msg = $('#msg').val();
                     $('#msg').val('');//reset
                     send_msg(msg);
@@ -805,14 +816,17 @@
         });
 
         function button_send_msg(){
+            socket.emit('message', $('#msg').val());
             var msg = $('#msg').val();
             $('#msg').val('');//reset
             send_msg(msg);
         }
 
 
-        function send_msg(msg){
-            $.ajax({
+        function send_msg(msg)
+        {
+            $.ajax
+            ({
                 headers: { 'X-CSRF-Token' : $('#csrf_token_input').val() },
                 type: "POST",
                 url: "{{route('message.store')}}",
@@ -820,14 +834,17 @@
                     'text': msg,
                     'conversation_id':{{$conversation->id}},
                 },
-                success: function (data) {
+
+                success: function (data)
+                {
                     if(data==true){
+
 
                         $('#panel-body').append(
                             '<div class="row">'+
                             '<div class="message owner">'+
                             msg+'<br/>'+
-                            '<b>now</b>'+
+                            '<span class="time_date">now</span>'+
                             '</div>'+
                             '</div>');
 
@@ -838,6 +855,7 @@
                     console.log(e);
                 }
             });
+            socket.emit('message', $('#msg').val());
         }
 
         function scrollToEnd(){

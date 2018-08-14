@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'hello@example.com',
-        'name' => 'Example',
+        'address' => 'No_Reply@gmail.com',
+        'name' => 'Reset your password Response',
     ],
 
     /*
